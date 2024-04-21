@@ -9,6 +9,7 @@ const Home = () => {
 
     const {data: restaurants, isLoading} = useGetRestaurantsQuery()
 
+    console.log('abc')
     return (
         <Container fluid className='home' pl={0}>
             <Flex
@@ -33,7 +34,7 @@ const Home = () => {
             <div className='home-grid'>
                 {isLoading ?
                     <Loader size='xl'/> :
-                    restaurants.map(restaurant => <Card shadow="sm" padding="lg" radius="md" className='home-restaurant'>
+                    restaurants.map(restaurant => <Card key={restaurant.id} shadow="sm" padding="lg" radius="md" className='home-restaurant'>
                         <Card.Section>
                             <Image
                                 src={restaurant.image || "https://placehold.co/600x400?text=Placeholder"}
@@ -47,7 +48,7 @@ const Home = () => {
                             {restaurant.description}
                         </Text>
                         <Flex gap='xs' mt='xs'>
-                            {restaurant.tags.map(tag => <Badge size='xl'>{tag}</Badge>)}
+                            {restaurant.tags.map((tag, i) => <Badge key={i} size='xl'>{tag}</Badge>)}
                         </Flex>
                     </Card>)
                 }
