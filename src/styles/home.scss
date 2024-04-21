@@ -1,0 +1,22 @@
+.home{
+
+  &-grid{
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 24px
+  }
+
+  &-restaurant{
+    width: 100%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .home{
+
+    &-grid{
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    }
+  }
+}

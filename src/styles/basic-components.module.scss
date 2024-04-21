@@ -1,0 +1,37 @@
+@import "variables";
+
+.navbar{
+  background-color: #F2F3F8;
+}
+
+.textInput{
+  border-radius: 20px;
+}
+
+.segmented{
+  background-color: white;
+  border-radius: 26px;
+}
+
+.segmentedIndicator{
+  background-color: $accent;
+  border-radius: 26px;
+}
+
+.segmentedLabel{
+  &[data-active="true"]{
+    color: white;
+  }
+}
+
+.badge{
+  font-weight: 400;
+  text-transform: none;
+  background-color: $gray;
+  border: 1px solid $grayBorder;
+  color: black;
+
+  &[data-size="xl"]{
+    height: 35px;
+  }
+}
