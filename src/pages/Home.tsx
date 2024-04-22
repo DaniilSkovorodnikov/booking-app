@@ -47,7 +47,7 @@ const Home = () => {
                         <Text>
                             {restaurant.description}
                         </Text>
-                        <Flex gap='xs' mt='xs'>
+                        <Flex gap='xs' mt='xs' wrap='wrap'>
                             {restaurant.tags.map((tag, i) => <Badge key={i} size='xl'>{tag}</Badge>)}
                         </Flex>
                     </Card>)
