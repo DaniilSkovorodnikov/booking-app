@@ -1,5 +1,5 @@
 import {AppShell, Container, Image} from "@mantine/core";
-import {Link} from "react-router-dom";
+import {Link, Outlet} from "react-router-dom";
 import profileIcon from '../assets/profile-icon.svg'
 import Home from "../pages/Home.tsx";
 
@@ -10,13 +10,13 @@ const Layout = () => {
             withBorder={false}
         >
             <AppShell.Navbar p={25} className='navbar'>
-                <Link to='/profile'>
+                <Link to='/login'>
                     <Image src={profileIcon} w={45} h={45}/>
                 </Link>
             </AppShell.Navbar>
             <AppShell.Main>
                 <Container fluid py={35} m={0}>
-                    <Home/>
+                    <Outlet/>
                 </Container>
             </AppShell.Main>
         </AppShell>

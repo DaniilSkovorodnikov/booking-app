@@ -35,3 +35,55 @@
     height: 35px;
   }
 }
+
+.carouselViewport{
+  border-radius: 22px;
+}
+
+.carouselControls{
+  z-index: 102;
+  width: calc(100% + 130px);
+  left: -65px;
+}
+
+.button{
+  max-width: 380px;
+  font-weight: 400;
+  border-radius: 10px;
+
+  &[data-variant='gray']{
+    background-color: #A6A9BE;
+    font-weight: 400;
+  }
+  &[data-variant='input']{
+    min-width: 100%;
+    background-color: #d9d9d9;
+    color: black;
+    font-weight: 400;
+    display: flex;
+    padding-left: 20px;
+  }
+}
+
+.input{
+  background-color: white;
+  border-radius: 10px;
+  color: black;
+  border: none;
+  position: relative;
+
+  &:disabled{
+    cursor: default;
+    background-color: white;
+    opacity: 1;
+    color: black;
+  }
+
+  &::placeholder{
+    color: #7B7E8F;
+  }
+
+  &[data-error="true"]{
+    border: 2px solid crimson;
+  }
+}

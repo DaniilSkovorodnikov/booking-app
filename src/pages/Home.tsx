@@ -2,14 +2,15 @@ import {Card, Container, Flex, Loader, SegmentedControl, TextInput, Text, Badge,
 import {useState} from "react";
 import {useGetRestaurantsQuery} from "../store/api/restaurantApi.ts";
 import '../styles/home.scss'
+import {useNavigate} from "react-router-dom";
 
 const Home = () => {
     const [restaurantName, setRestaurantName] = useState('');
     const [listType, setListType] = useState<'list' | 'map'>('list')
 
     const {data: restaurants, isLoading} = useGetRestaurantsQuery()
+    const navigate = useNavigate();
 
-    console.log('abc')
     return (
         <Container fluid className='home' pl={0}>
             <Flex
@@ -34,7 +35,14 @@ const Home = () => {
             <div className='home-grid'>
                 {isLoading ?
                     <Loader size='xl'/> :
-                    restaurants.map(restaurant => <Card key={restaurant.id} shadow="sm" padding="lg" radius="md" className='home-restaurant'>
+                    restaurants.map(restaurant => <Card
+                        key={restaurant.id}
+                        shadow="sm"
+                        padding="lg"
+                        radius="md"
+                        className='home-restaurant'
+                        onClick={() => navigate(`/restaurant/${restaurant.id}`)}
+                    >
                         <Card.Section>
                             <Image
                                 src={restaurant.image || "https://placehold.co/600x400?text=Placeholder"}
