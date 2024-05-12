@@ -1,9 +1,9 @@
 import {AppShell, Container, Image} from "@mantine/core";
 import {Link, Outlet} from "react-router-dom";
 import profileIcon from '../assets/profile-icon.svg'
-import Home from "../pages/Home.tsx";
+import {ReactNode} from "react";
 
-const Layout = () => {
+const Layout = ({children} : {children: ReactNode}) => {
     return (
         <AppShell
             navbar={{width: 95, breakpoint: 'md', collapsed: {mobile: true}}}
@@ -16,7 +16,7 @@ const Layout = () => {
             </AppShell.Navbar>
             <AppShell.Main>
                 <Container fluid py={35} m={0}>
-                    <Outlet/>
+                    {children}
                 </Container>
             </AppShell.Main>
         </AppShell>
