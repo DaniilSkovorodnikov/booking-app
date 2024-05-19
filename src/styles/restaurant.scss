@@ -7,6 +7,12 @@
     object-fit: cover;
   }
 
+  &-grid{
+    div:first-of-type{
+      max-width: 100%;
+    }
+  }
+
   &-address{
     font-weight: 500;
   }

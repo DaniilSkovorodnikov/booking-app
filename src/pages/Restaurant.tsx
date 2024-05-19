@@ -9,11 +9,14 @@ import timeIcon from '../assets/icon-time.svg';
 import siteIcon from '../assets/icon-site.svg';
 import {notifications} from "@mantine/notifications";
 import Layout from "../components/Layout.tsx";
+import {useDisclosure} from "@mantine/hooks";
+import BookingModal from "../components/BookingModal.tsx";
 
 const Restaurant = () => {
     const {id} = useParams()
     const {data: restaurant, isSuccess, error: isErrorRestaurant} = useGetRestaurantByIdQuery(+id);
-    const {data: images, isLoading: isLoadingImages} = useGetRestaurantImagesQuery(+id)
+    const {data: images, isLoading: isLoadingImages} = useGetRestaurantImagesQuery(+id);
+    const [opened, {open, close}] = useDisclosure(false);
 
     useEffect(() => {
         if(isErrorRestaurant){
@@ -32,7 +35,7 @@ const Restaurant = () => {
     return (
         <Layout>
             <Container fluid className="restaurant" p={0}>
-                <Grid gutter={70}>
+                <Grid className='restaurant-grid' gutter={70}>
                     <Grid.Col span={5}>
                         <Carousel
                             slideSize='100%'
@@ -80,6 +83,7 @@ const Restaurant = () => {
                     </Grid.Col>
                 </Grid>
             </Container>
+            <BookingModal opened={opened} onClose={close}/>
         </Layout>
     );
 };

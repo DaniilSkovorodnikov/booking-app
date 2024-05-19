@@ -13,3 +13,8 @@ export interface InputOverrideProps extends InputProps{
     onClick?: MouseEventHandler<HTMLInputElement>,
     onFocus?: FocusEventHandler<HTMLInputElement>
 }
+
+export interface BookingModalProps {
+    opened: boolean,
+    onClose: () => void,
+}
