@@ -34,6 +34,17 @@
   &[data-size="xl"]{
     height: 35px;
   }
+
+  &[data-variant='checkbox']{
+    cursor: pointer;
+  }
+
+  &[data-variant='checkbox-checked']{
+    cursor: pointer;
+    background-color: crimson;
+    color: white;
+    border: none;
+  }
 }
 
 .carouselViewport{
@@ -85,5 +96,27 @@
 
   &[data-error="true"]{
     border: 2px solid crimson;
+  }
+}
+
+.numberInput, .textarea{
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #d9d9d9;
+  padding-left: 16px;
+}
+
+.accordionControl{
+  height: 36px;
+}
+
+.timeInput{
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+}
+
+.calendarDay{
+  &[data-selected="true"]{
+    background-color: crimson;
   }
 }

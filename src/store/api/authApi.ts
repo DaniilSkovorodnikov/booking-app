@@ -1,5 +1,5 @@
 import {api} from "./api.ts";
-import {UserAuthForm} from "../../models/components.ts";
+import {UserAuthForm, UserRegistrationForm} from "../../models/components.ts";
 import {LoginResponse} from "../../models/api.ts";
 
 export const authApi = api.injectEndpoints({
@@ -11,8 +11,15 @@ export const authApi = api.injectEndpoints({
                 method: 'POST',
             })
         }),
+        register: build.mutation<LoginResponse, UserRegistrationForm>({
+            query: (user) => ({
+                body: user,
+                url: 'client/auth/register',
+                method: 'POST',
+            })
+        }),
     }),
     overrideExisting: false
 })
 
-export const {useLoginMutation} = authApi
+export const {useLoginMutation, useRegisterMutation} = authApi

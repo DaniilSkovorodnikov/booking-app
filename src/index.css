@@ -19,3 +19,20 @@ h1,h2,h3,h4,h5,h6,p,a{
     margin: 0;
     padding: 0;
 }
+
+.btn-round{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background-color: #F2F3F8;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+.logo{
+    width: 78px;
+    height: 120px;
+}

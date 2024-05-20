@@ -10,6 +10,23 @@ export const restaurantApi = api.injectEndpoints({
         }),
         getRestaurantImages: build.query<any, number>({
             query: (id) => `/restaurants/${id}/images`
+        }),
+        getTags: build.query<string[], number>({
+            query: (id) => `/client/restaurants/${id}/tags`
+        }),
+        checkExistsTables: build.mutation({
+            query: body => ({
+                body,
+                url: `/client/restaurants/${body.restaurantId}/tables/exist`,
+                method: 'POST'
+            })
+        }),
+        postBooking: build.mutation({
+            query: body => ({
+                body,
+                url: `/client/restaurants/tables/${body.tableId}/booking`,
+                method: 'POST'
+            })
         })
     }),
     overrideExisting: false
@@ -18,5 +35,8 @@ export const restaurantApi = api.injectEndpoints({
 export const {
     useGetRestaurantsQuery,
     useGetRestaurantByIdQuery,
-    useGetRestaurantImagesQuery
+    useGetRestaurantImagesQuery,
+    useGetTagsQuery,
+    useCheckExistsTablesMutation,
+    usePostBookingMutation,
 } = restaurantApi

@@ -1,26 +1,32 @@
-import {Box, Button, Center, Container, Flex} from "@mantine/core";
-import "../styles/auth.scss"
+import React, {useEffect} from 'react';
+import {hasLength, isEmail, isNotEmpty, useForm} from "@mantine/form";
+import {UserRegistrationForm} from "../models/components.ts";
+import {useRegisterMutation} from "../store/api/authApi.ts";
 import {useNavigate} from "react-router-dom";
-import {useForm} from "@mantine/form";
-import {UserAuthForm} from "../models/components.ts";
-import InputError from "../components/InputError.tsx";
+import {Box, Button, Center, Container, Flex} from "@mantine/core";
 import Input from "../components/InputOverride.tsx";
-import {useLoginMutation} from "../store/api/authApi.ts";
-import {useEffect} from "react";
+import InputError from "../components/InputError.tsx";
 import {DefaultError} from "../models/api.ts";
+import logo from "../assets/logo.svg";
 
-const Auth = () => {
-    const form = useForm<UserAuthForm>({
+const Registration = () => {
+    const form = useForm<UserRegistrationForm>({
         initialValues: {
             email: '',
             password: '',
+            name: ''
+        },
+        validate: {
+            email: isEmail('Некорректный формат e-mail'),
+            password: hasLength({min: 6}, 'Минимальная длина пароля должна быть 6 символов'),
+            name: isNotEmpty('Обязательное поле')
         }
     })
-    const [login, {data, error}] = useLoginMutation();
+    const [register, {data}] = useRegisterMutation();
     const navigate = useNavigate()
 
-    const handleSubmit = async (value: UserAuthForm) => {
-        await login(value)
+    const handleSubmit = async (value: UserRegistrationForm) => {
+        await register(value)
     }
 
     useEffect(() => {
@@ -39,17 +45,19 @@ const Auth = () => {
                 <form onSubmit={form.onSubmit(handleSubmit)}>
                     <Flex
                         className="auth-container"
-                        pt={{lg: 200, base: 100}}
-                        pb={{lg: 300, base: 170}}
+                        pt={{lg: 100, base: 100}}
+                        pb={{lg: 200, base: 170}}
                         direction='column'
                         justify="space-between"
                     >
                         <Box w={{xl: 500, lg: 400}}>
-
                             <Flex
                                 direction='column'
                                 gap='md'
                             >
+                                <Center mb='xl'>
+                                    <img className='logo' src={logo}/>
+                                </Center>
                                 <Flex direction="column">
                                     <Input placeholder="E-mail" {...form.getInputProps('email')}/>
                                     {form.errors?.email && <InputError errorMessage={form.errors?.email as string}/>}
@@ -58,13 +66,15 @@ const Auth = () => {
                                     <Input type="password" placeholder="Пароль" {...form.getInputProps('password')}/>
                                     {form.errors?.password && <InputError errorMessage={form.errors?.password as string}/>}
                                 </Flex>
+                                <Flex direction="column">
+                                    <Input placeholder="Ваше имя" {...form.getInputProps('name')}/>
+                                    {form.errors?.name && <InputError errorMessage={form.errors?.name as string}/>}
+                                </Flex>
                             </Flex>
-                            {(error as DefaultError)?.status === 422 && <InputError errorMessage="Проверьте корректность ввёденных данных"/>}
-                            {(error as DefaultError)?.status === 400 && <InputError errorMessage="Неверный E-mail или пароль"/>}
                         </Box>
                         <Center>
                             <Box w={{xl: 380, lg: 280}} mt={50}>
-                                <Button type="submit" fullWidth>Войти</Button>
+                                <Button type="submit" fullWidth>Зарегистрироваться</Button>
                             </Box>
                         </Center>
                     </Flex>
@@ -74,4 +84,4 @@ const Auth = () => {
     );
 };
 
-export default Auth;
+export default Registration;

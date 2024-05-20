@@ -78,7 +78,7 @@ const Restaurant = () => {
                                     </Text>
                                 </Flex>
                             </Card>
-                            <Button size='xl' radius='lg' color='red' fz={16} fw={16} px={60}>Забронировать</Button>
+                            <Button size='xl' radius='lg' color='red' fz={16} fw={16} px={60} onClick={open}>Забронировать</Button>
                         </Flex>
                     </Grid.Col>
                 </Grid>
