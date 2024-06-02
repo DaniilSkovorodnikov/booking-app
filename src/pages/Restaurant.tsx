@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Badge, Button, Card, Container, Flex, Grid, Loader, Text, Title} from "@mantine/core";
 import {useGetRestaurantByIdQuery, useGetRestaurantImagesQuery} from "../store/api/restaurantApi.ts";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import '../styles/restaurant.scss'
 import {Carousel} from "@mantine/carousel";
 import locationIcon from '../assets/icon-location.svg';
@@ -14,9 +14,20 @@ import BookingModal from "../components/BookingModal.tsx";
 
 const Restaurant = () => {
     const {id} = useParams()
+    const navigate = useNavigate()
     const {data: restaurant, isSuccess, error: isErrorRestaurant} = useGetRestaurantByIdQuery(+id);
     const {data: images, isLoading: isLoadingImages} = useGetRestaurantImagesQuery(+id);
     const [opened, {open, close}] = useDisclosure(false);
+
+    const handleOpenBookingModal = () => {
+        if(!localStorage.getItem('token')){
+            navigate('/login')
+            notifications.show({
+                message: 'Авторизуйтесь для бронирования столика'
+            })
+        }
+        open()
+    }
 
     useEffect(() => {
         if(isErrorRestaurant){
@@ -74,11 +85,11 @@ const Restaurant = () => {
                                 <Flex gap='sm' mt='xs'>
                                     <img src={siteIcon}/>
                                     <Text fw={300} fz={14}>
-                                        Веб-сайт: {restaurant.site ? <a href={restaurant.site} target='_blank'>{restaurant.site}</a> : 'Не указано'}
+                                        Веб-сайт: {restaurant.site ? <a href={restaurant.site.includes('https') ? restaurant.site : 'https://' + restaurant.site.replaceAll(' ', '')} target='_blank'>{restaurant.site}</a> : 'Не указано'}
                                     </Text>
                                 </Flex>
                             </Card>
-                            <Button size='xl' radius='lg' color='red' fz={16} fw={16} px={60} onClick={open}>Забронировать</Button>
+                            <Button size='xl' radius='lg' color='red' fz={16} fw={16} px={60} onClick={handleOpenBookingModal}>Забронировать</Button>
                         </Flex>
                     </Grid.Col>
                 </Grid>
