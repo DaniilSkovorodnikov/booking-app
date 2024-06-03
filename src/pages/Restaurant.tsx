@@ -11,6 +11,7 @@ import {notifications} from "@mantine/notifications";
 import Layout from "../components/Layout.tsx";
 import {useDisclosure} from "@mantine/hooks";
 import BookingModal from "../components/BookingModal.tsx";
+import Header from "../components/Header.tsx";
 
 const Restaurant = () => {
     const {id} = useParams()
@@ -46,6 +47,7 @@ const Restaurant = () => {
     return (
         <Layout>
             <Container fluid className="restaurant" p={0}>
+                <Header/>
                 <Grid className='restaurant-grid' gutter={70}>
                     <Grid.Col span={5}>
                         <Carousel

@@ -15,7 +15,7 @@ const Layout = ({children} : {children: ReactNode}) => {
                 </Link>
             </AppShell.Navbar>
             <AppShell.Main>
-                <Container fluid py={35} m={0}>
+                <Container fluid py={25} m={0}>
                     {children}
                 </Container>
             </AppShell.Main>
