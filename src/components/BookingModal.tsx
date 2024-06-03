@@ -166,7 +166,7 @@ const BookingModal = ({opened, onClose}: BookingModalProps) => {
                         })}
                     />
                 </Flex>
-                <Flex direction='column' gap='xs'>
+                {bookingState.date && schedule && <Flex direction='column' gap='xs'>
                     <label>Утро</label>
                     <Flex gap='sm' wrap='wrap'>
                         {(schedule || []).filter(time => +time.substring(0, 2) <= 12).map(time => <Badge
@@ -179,15 +179,16 @@ const BookingModal = ({opened, onClose}: BookingModalProps) => {
                     </Flex>
                     <label>День</label>
                     <Flex gap='sm' wrap='wrap'>
-                        {(schedule || []).filter(time => +time.substring(0, 2) > 12 && +time.substring(0, 2) < 18).map(time => <Badge
-                            variant={bookingState.time === time ? 'checkbox-checked' : 'checkbox'}
-                            size='lg'
-                            onClick={() => changeBookingState('time', time)}
-                        >
-                            {time.substring(0, 5)}
-                        </Badge>)}
+                        {(schedule || []).filter(time => +time.substring(0, 2) > 12 && +time.substring(0, 2) < 18).map(time =>
+                            <Badge
+                                variant={bookingState.time === time ? 'checkbox-checked' : 'checkbox'}
+                                size='lg'
+                                onClick={() => changeBookingState('time', time)}
+                            >
+                                {time.substring(0, 5)}
+                            </Badge>)}
                     </Flex>
-                    <label>Утро</label>
+                    <label>Вечер</label>
                     <Flex gap='sm' wrap='wrap'>
                         {(schedule || []).filter(time => +time.substring(0, 2) >= 18).map(time => <Badge
                             variant={bookingState.time === time ? 'checkbox-checked' : 'checkbox'}
@@ -197,7 +198,7 @@ const BookingModal = ({opened, onClose}: BookingModalProps) => {
                             {time.substring(0, 5)}
                         </Badge>)}
                     </Flex>
-                </Flex>
+                </Flex>}
                 <TimeInput
                     description='Продолжительность бронирования'
                     onChange={(event) => changeBookingDuration(event.target.value)}
@@ -208,6 +209,7 @@ const BookingModal = ({opened, onClose}: BookingModalProps) => {
                     mt='lg'
                     style={{alignSelf: 'center', minWidth: 260}}
                     onClick={handleBooking}
+                    disabled={!bookingState.date || !bookingState.duration || !bookingState.time}
                 >
                     Забронировать
                 </Button>

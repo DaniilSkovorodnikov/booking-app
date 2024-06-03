@@ -1,5 +1,5 @@
 import {Card, Container, Flex, Loader, SegmentedControl, TextInput, Text, Badge, Image} from "@mantine/core";
-import {useState} from "react";
+import {useMemo, useState} from "react";
 import {useGetRestaurantsQuery} from "../store/api/restaurantApi.ts";
 import '../styles/home.scss'
 import {useNavigate} from "react-router-dom";
@@ -8,9 +8,25 @@ import Layout from "../components/Layout.tsx";
 const Home = () => {
     const [restaurantName, setRestaurantName] = useState('');
     const [listType, setListType] = useState<'list' | 'map'>('list')
+    const [checkedTags, setCheckedTags] = useState([]);
 
     const {data: restaurants, isLoading} = useGetRestaurantsQuery()
     const navigate = useNavigate();
+
+    const allTags = useMemo(() => {
+        if(restaurants){
+            const tags = []
+            restaurants.forEach(restaurant => {
+                (restaurant.tags || []).forEach(tag => {
+                    if(!tags.includes(tag)){
+                        tags.push(tag)
+                    }
+                })
+            })
+            return tags
+        }
+        return []
+    }, [restaurants])
 
     return (
         <Layout>
@@ -34,10 +50,24 @@ const Home = () => {
                         ]}
                     />
                 </Flex>
+                <Flex mt={32} gap='xs'>
+                    {allTags.map(tag => <Badge
+                        size='xl'
+                        variant={checkedTags.includes(tag) ? 'checkbox-checked' : 'checkbox'}
+                        onClick={() => setCheckedTags(prevState => prevState.includes(tag)
+                            ? prevState.filter(value => value !== tag)
+                            : [...prevState, tag]
+                        )}
+                    >
+                        {tag}
+                    </Badge>)}
+                </Flex>
                 <div className='home-grid'>
                     {isLoading ?
                         <Loader size='xl'/> :
-                        restaurants.map(restaurant => <Card
+                        restaurants
+                            .filter(restaurant => checkedTags.length === 0 || restaurant.tags.some(tag => checkedTags.includes(tag)))
+                            .map(restaurant => <Card
                             key={restaurant.id}
                             shadow="sm"
                             padding="lg"

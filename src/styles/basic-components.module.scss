@@ -30,6 +30,7 @@
   background-color: $gray;
   border: 1px solid $grayBorder;
   color: black;
+  transition: all 0.05s linear;
 
   &[data-size="xl"]{
     height: 35px;
@@ -43,7 +44,7 @@
     cursor: pointer;
     background-color: crimson;
     color: white;
-    border: none;
+    border: 1px solid crimson;
   }
 }
 
