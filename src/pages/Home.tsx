@@ -66,7 +66,8 @@ const Home = () => {
                     {isLoading ?
                         <Loader size='xl'/> :
                         restaurants
-                            .filter(restaurant => checkedTags.length === 0 || restaurant.tags.some(tag => checkedTags.includes(tag)))
+                            .filter(restaurant => (checkedTags.length === 0 || restaurant.tags.some(tag => checkedTags.includes(tag))) &&
+                                restaurant.name.toLowerCase().includes(restaurantName.toLowerCase()))
                             .map(restaurant => <Card
                             key={restaurant.id}
                             shadow="sm"
