@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Accordion, Badge, Button, Flex, Modal, NumberInput, Textarea} from "@mantine/core";
 import {BookingModalProps} from "../models/props.ts";
 import {BookingState} from "../models/components.ts";
@@ -6,7 +6,12 @@ import {Calendar, TimeInput} from "@mantine/dates";
 import {useDisclosure} from "@mantine/hooks";
 import dayjs from 'dayjs';
 import chevronIcon from '../assets/icon-chevron.svg'
-import {useCheckExistsTablesMutation, useGetTagsQuery, usePostBookingMutation} from "../store/api/restaurantApi.ts";
+import {
+    useCheckExistsTablesMutation,
+    useGetFreeBookingTimeQuery,
+    useGetTagsQuery,
+    usePostBookingMutation
+} from "../store/api/restaurantApi.ts";
 import {useParams} from "react-router-dom";
 import {notifications} from "@mantine/notifications";
 import {FetchBaseQueryError} from "@reduxjs/toolkit/query";
@@ -15,16 +20,20 @@ import {SerializedError} from "@reduxjs/toolkit";
 const BookingModal = ({opened, onClose}: BookingModalProps) => {
     const {id} = useParams()
 
-    const {data: tags} = useGetTagsQuery(+id);
-    const [checkExistsTables] = useCheckExistsTablesMutation();
-    const [postBooking] = usePostBookingMutation();
-
     const [bookingState, setBookingState] = useState<Partial<BookingState>>({
         persons_count: 1,
         tags: []
     })
     const [existsTables, setExistsTables] = useState([]);
     const [isDatetimePick, {open: openDatetimePick, close: closeDatetimePick}] = useDisclosure(false);
+
+    const {data: tags} = useGetTagsQuery(+id);
+    const {data: schedule} = useGetFreeBookingTimeQuery({restaurantId: id, tableId: existsTables[0], date: bookingState.date?.toISOString()}, {
+        skip: !existsTables[0] || !bookingState.date,
+        refetchOnMountOrArgChange: true
+    })
+    const [checkExistsTables] = useCheckExistsTablesMutation();
+    const [postBooking] = usePostBookingMutation();
 
     const changeBookingState = (fieldName: keyof BookingState, value: number | string | string[] | Date) => {
         setBookingState(prevState => ({...prevState, [fieldName]: value}))
@@ -160,32 +169,32 @@ const BookingModal = ({opened, onClose}: BookingModalProps) => {
                 <Flex direction='column' gap='xs'>
                     <label>Утро</label>
                     <Flex gap='sm' wrap='wrap'>
-                        {['9:30', '10:00', '11:30'].map(time => <Badge
+                        {(schedule || []).filter(time => +time.substring(0, 2) <= 12).map(time => <Badge
                             variant={bookingState.time === time ? 'checkbox-checked' : 'checkbox'}
                             size='lg'
                             onClick={() => changeBookingState('time', time)}
                         >
-                            {time}
+                            {time.substring(0, 5)}
                         </Badge>)}
                     </Flex>
                     <label>День</label>
                     <Flex gap='sm' wrap='wrap'>
-                        {['12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30'].map(time => <Badge
+                        {(schedule || []).filter(time => +time.substring(0, 2) > 12 && +time.substring(0, 2) < 18).map(time => <Badge
                             variant={bookingState.time === time ? 'checkbox-checked' : 'checkbox'}
                             size='lg'
                             onClick={() => changeBookingState('time', time)}
                         >
-                            {time}
+                            {time.substring(0, 5)}
                         </Badge>)}
                     </Flex>
                     <label>Утро</label>
                     <Flex gap='sm' wrap='wrap'>
-                        {['18:00', '19:00', '20:30'].map(time => <Badge
+                        {(schedule || []).filter(time => +time.substring(0, 2) >= 18).map(time => <Badge
                             variant={bookingState.time === time ? 'checkbox-checked' : 'checkbox'}
                             size='lg'
                             onClick={() => changeBookingState('time', time)}
                         >
-                            {time}
+                            {time.substring(0, 5)}
                         </Badge>)}
                     </Flex>
                 </Flex>
