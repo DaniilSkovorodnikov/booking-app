@@ -1,0 +1,13 @@
+.card{
+  width: 100%;
+  flex-grow: 1;
+  background-color: white;
+  position: relative;
+  border-radius: 10px;
+
+  &-collapse{
+    position: absolute;
+    left: 18px;
+    top: 12px;
+  }
+}

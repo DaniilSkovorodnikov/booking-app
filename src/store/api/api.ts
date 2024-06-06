@@ -1,7 +1,7 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'https://restaurants-booking.ru/api/',
+    baseUrl: 'https://restaurants-booking.ru/api',
     prepareHeaders: (headers) => {
         const token =  localStorage.getItem('token');
         if(token){

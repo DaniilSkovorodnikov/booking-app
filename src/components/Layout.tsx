@@ -10,7 +10,7 @@ const Layout = ({children} : {children: ReactNode}) => {
             withBorder={false}
         >
             <AppShell.Navbar p={25} className='navbar'>
-                <Link to='/login'>
+                <Link to='/profile'>
                     <Image src={profileIcon} w={45} h={45}/>
                 </Link>
             </AppShell.Navbar>

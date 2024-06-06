@@ -30,6 +30,12 @@ export const restaurantApi = api.injectEndpoints({
         }),
         getFreeBookingTime: build.query({
             query: ({restaurantId, tableId, date}) => `/client/restaurants/${restaurantId}/tables/${tableId}/schedule?date=${date}`
+        }),
+        getUserInfo: build.query<any, void>({
+            query: () => 'client/user'
+        }),
+        getMyBookings: build.query<any, void>({
+            query: () => 'client/user/bookings'
         })
     }),
     overrideExisting: false
@@ -42,5 +48,7 @@ export const {
     useGetTagsQuery,
     useCheckExistsTablesMutation,
     usePostBookingMutation,
-    useGetFreeBookingTimeQuery
+    useGetFreeBookingTimeQuery,
+    useGetUserInfoQuery,
+    useGetMyBookingsQuery
 } = restaurantApi

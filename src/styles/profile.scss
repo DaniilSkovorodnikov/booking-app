@@ -1,0 +1,39 @@
+.profile{
+  width: 40%;
+  margin: 0 calc((100% - 40%) / 2) 0 calc((100% - 40%) / 2 - 95px);
+
+  &-form{
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+}
+
+.bookings{
+  width: 70%;
+  margin: 32px calc((100% - 70%) / 2) 0 calc((100% - 70%) / 2 - 95px) ;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  &-title{
+    text-align: center;
+  }
+}
+
+@media (max-width: 1050px) {
+  .profile{
+    width: 50%;
+    margin: 0 calc((100% - 50%) / 2) 0 calc((100% - 50%) / 2 - 95px);
+  }
+}
+
+@media (max-width: 992px) {
+  .profile{
+    margin: 0 auto;
+  }
+
+  .bookings{
+    margin: 32px auto 0;
+  }
+}
