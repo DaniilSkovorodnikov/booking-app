@@ -36,7 +36,7 @@ const Home = () => {
                 >
                     <TextInput
                         flex='1 1 0'
-                        placeholder='Начните вводить название ресторана'
+                        placeholder='Начните вводить название ресторана...'
                         value={restaurantName}
                         onChange={(event) => setRestaurantName(event.target.value)}
                     />
