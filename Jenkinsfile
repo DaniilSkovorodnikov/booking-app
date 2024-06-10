@@ -6,4 +6,5 @@ pipeline {
                 git 'https://github.com/DaniilSkovorodnikov/booking-app.git'
             }
         }
+    }
 }
