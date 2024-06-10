@@ -3,7 +3,12 @@ pipeline {
     stages {
         stage('Clone repository') {
             steps {
-                git 'https://github.com/DaniilSkovorodnikov/booking-app.git'
+                git 'https://github.com/SiMiZZZ/TableReservationService.git'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                    sh 'npm run build'
             }
         }
     }

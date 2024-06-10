@@ -19,7 +19,7 @@ const Restaurant = () => {
     const {data: restaurant, isSuccess, error: isErrorRestaurant} = useGetRestaurantByIdQuery(+id);
     const {data: images, isLoading: isLoadingImages} = useGetRestaurantImagesQuery(+id);
     const [opened, {open, close}] = useDisclosure(false);
-    
+
     const handleOpenBookingModal = () => {
         if(!localStorage.getItem('token')){
             navigate('/login')
